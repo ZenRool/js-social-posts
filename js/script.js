@@ -46,7 +46,6 @@ for (let id = 2 ; id <= 20 ; id++ ) {
 }
 // Per ogni caratteristica di post genera un elemento dom che appende nel container
 posts.forEach(element => appendContainer(getPostByObj(element)));
-
 // Fine del main
 
 // Functions
@@ -79,19 +78,30 @@ function getPostByObj(postMeta) {
     <div class="post__footer">
         <div class="likes js-likes">
             <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="1">
+                <a class="like-button js-like-button" href="#" data-postid="1">
                     <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                     <span class="like-button__label">Mi Piace</span>
                 </a>
             </div>
             <div class="likes__counter">
-                Piace a <b id="like-counter-1" class="js-likes-counter">
+                Piace a <b id="like-counter-${postMeta.id}" class="js-likes-counter">
                 ${postMeta.likes}</b> persone
             </div>
         </div> 
     </div>   
     `;
+    post.querySelector(".likes__cta").addEventListener('click', getLike);
+    
     return post;
+}
+function getLike() {
+    const parent = this.parentElement;
+    const counter = parent.querySelector(".js-likes-counter");
+    const tog = this.getElementsByTagName("a")[0].classList.toggle("like-button--liked");
+    // console.log(tog); senza sapere ne leggere ne scrivere element.toggle restituisce true o false
+
+    // se true allora +1 altrimenti -1 
+    counter.innerHTML = tog ? parseInt(counter.innerHTML) + 1 : parseInt(counter.innerHTML) - 1 ;
 }
 // Funzione per generare casualmente i numeri  
 function getRandomIntInclusive(min, max) {
