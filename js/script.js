@@ -53,6 +53,8 @@ posts.forEach(element => appendContainer(getPostByObj(element)));
 function getPostByObj(postMeta) {
     const post = document.createElement("div");
     const authorName = postMeta.author.name;
+    const dataSplit = postMeta.created.split("-");
+    const dataIta = dataSplit[2] + "/" + dataSplit[1] + "/" + dataSplit[0];
     post.classList.add("post");
     post.innerHTML = `
     <div class="post__header">
@@ -62,7 +64,7 @@ function getPostByObj(postMeta) {
             </div>
             <div class="post-meta__data">
                 <div class="post-meta__author">${authorName}</div>
-                <div class="post-meta__time">${postMeta.created}</div>
+                <div class="post-meta__time">${dataIta}</div>
             </div>                    
         </div>
     </div>
