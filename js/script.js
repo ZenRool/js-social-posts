@@ -14,6 +14,52 @@ const posts = [
 ];
 const names = ["Phil" , "Lorenzo", "Olga" , "Carlo" , "Nicola" , "Karolina"];
 const lastnames = ["Mangione" , "Papperini" , "Demina" , "Lollobrigida" , "Sarli" , "Tymoszuk"]
+const container = document.getElementById("container");
+// dato un oggetto post restituisco il dom inerente
+const getPostByObj = postMeta => {
+    const post = document.createElement("div");
+    const authorName = postMeta.author.name;
+    post.classList.add("post");
+    post.innerHTML = `
+    <div class="post__header">
+        <div class="post-meta">                    
+            <div class="post-meta__icon">
+                <img class="profile-pic" src=" ${"image" in postMeta.author ? `${postMeta.author.image}` : `https://dei.gsu.edu/files/2021/04/question-mark-information-icon-300x300.png`} " alt= "${authorName}">                     
+            </div>
+            <div class="post-meta__data">
+                <div class="post-meta__author">${authorName}</div>
+                <div class="post-meta__time">${postMeta.created}</div>
+            </div>                    
+        </div>
+    </div>
+    <div class="post__text">
+        ${postMeta.content}
+    </div>
+    ${"media" in postMeta ? `
+    <div class="post__image">
+        <img src="${postMeta.media}" alt="">
+    </div>
+    ` : ``}
+
+    <div class="post__footer">
+        <div class="likes js-likes">
+            <div class="likes__cta">
+                <a class="like-button  js-like-button" href="#" data-postid="1">
+                    <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                    <span class="like-button__label">Mi Piace</span>
+                </a>
+            </div>
+            <div class="likes__counter">
+                Piace a <b id="like-counter-1" class="js-likes-counter">
+                ${postMeta.likes}</b> persone
+            </div>
+        </div> 
+    </div>   
+    `;
+    return post;
+};
+
+
 
 // posts 
 // id: n + 1
@@ -68,7 +114,7 @@ for (let id = 2 ; id <= 20 ; id++ ) {
             name: `${names[getRandomIntInclusive(0, names.length - 1)]} ${(lastnames[getRandomIntInclusive(0, lastnames.length - 1)])}`
         },
         likes: getRandomIntInclusive(0, 100),
-        created: `${date.getFullYear}-${date.getMonth}-${date.getDay}`
+        created: `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
     }
     // 2 terzi di post hanno un immagine 
     if (getRandomIntInclusive(0, 2) !== 2 ) {
@@ -78,8 +124,11 @@ for (let id = 2 ; id <= 20 ; id++ ) {
     if (getRandomIntInclusive(0, 3) !== 3 ) {
         post.author.image = `https://unsplash.it/300/300?image=${getRandomIntInclusive(10, 29)}`;   
     }
+    console.log(post.created);
     posts.push(post);
 }
+
+
 
 // Funzione per generare casualmente i numeri  
 function getRandomIntInclusive(min, max) {
@@ -87,3 +136,4 @@ function getRandomIntInclusive(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
