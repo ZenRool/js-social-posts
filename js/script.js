@@ -53,6 +53,7 @@ posts.forEach(element => appendContainer(getPostByObj(element)));
 function getPostByObj(postMeta) {
     const post = document.createElement("div");
     const authorName = postMeta.author.name;
+    const authorInit = getInitial(authorName);
     const dataSplit = postMeta.created.split("-");
     const dataIta = dataSplit[2] + "/" + dataSplit[1] + "/" + dataSplit[0];
     post.classList.add("post");
@@ -60,7 +61,11 @@ function getPostByObj(postMeta) {
     <div class="post__header">
         <div class="post-meta">                    
             <div class="post-meta__icon">
-                <img class="profile-pic" src=" ${"image" in postMeta.author ? `${postMeta.author.image}` : `https://dei.gsu.edu/files/2021/04/question-mark-information-icon-300x300.png`} " alt= "${authorName}">                     
+                ${"image" in postMeta.author ? 
+                `<img class="profile-pic" src=" ${postMeta.author.image}" alt= "${authorName}">` 
+                : `<div class="profile-pic-default">
+                    ${authorInit}   
+                </div>`}                     
             </div>
             <div class="post-meta__data">
                 <div class="post-meta__author">${authorName}</div>
@@ -111,6 +116,10 @@ function getRandomIntInclusive(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
+// Funzione restituisce iniziali di un nome 
+function getInitial(aName){
+    const arr = aName.split(" ");
+    return arr[0].charAt(0) + arr[1].charAt(0);
+};
 
 

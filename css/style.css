@@ -76,6 +76,7 @@ h1 {
     width: 60px;
     overflow: hidden;
     border-radius: 50%;
+    font-size: 2rem;
 }
 
 .profile-pic-default span {
